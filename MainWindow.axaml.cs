@@ -11,10 +11,12 @@ namespace StockFlow;
 public partial class MainWindow : Window
 {
     private readonly string _cs;
-    private readonly ListBox _list = new();
-    private readonly TextBlock _stats = new(), _alerts = new(), _status = new();
-    private readonly TextBox _name = new(), _sku = new(), _category = new(), _qty = new(), _minimum = new(), _price = new(), _search = new(), _moveQty = new(), _note = new();
-    private readonly ComboBox _moveProduct = new(), _language = new();
+    // Les contrôles sont recréés à chaque reconstruction de l'interface
+    // (notamment lors du changement de langue).
+    private ListBox _list = new();
+    private TextBlock _stats = new(), _alerts = new(), _status = new();
+    private TextBox _name = new(), _sku = new(), _category = new(), _qty = new(), _minimum = new(), _price = new(), _search = new(), _moveQty = new(), _note = new();
+    private ComboBox _moveProduct = new(), _language = new();
     private List<Product> _products = new();
     private bool _en;
     private int? _editingId;
@@ -57,6 +59,23 @@ public partial class MainWindow : Window
 
     private void BuildUi()
     {
+        // Ne jamais réutiliser un Control déjà attaché à l'ancienne arborescence visuelle.
+        _list = new ListBox();
+        _stats = new TextBlock();
+        _alerts = new TextBlock();
+        _status = new TextBlock();
+        _name = new TextBox();
+        _sku = new TextBox();
+        _category = new TextBox();
+        _qty = new TextBox();
+        _minimum = new TextBox();
+        _price = new TextBox();
+        _search = new TextBox();
+        _moveQty = new TextBox();
+        _note = new TextBox();
+        _moveProduct = new ComboBox();
+        _language = new ComboBox();
+
         Background = B("#F3F6FA");
         var root = new Grid { ColumnDefinitions = new ColumnDefinitions("225,*") };
         var side = new StackPanel { Background = B("#17243A"), Spacing = 16 };
